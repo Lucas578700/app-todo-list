@@ -25,7 +25,7 @@ export const BackgroundTextAlt = styled(Text)`
   font-size: 20px;
   color: #FFF;
   padding-top: 2%;
-  padding-left: 10%;
+  padding-left: 15%;
 `;
 
 export const ScrollViewContent = styled(ScrollView)`
@@ -55,7 +55,7 @@ export const ErrorText = styled(Text)`
 `;
 
 export const Button = styled.TouchableOpacity`
-  background-color: #68B2F8;
+  background-color: #162c46;
   width: 100%;
   height: 45px;
   border-radius: 4px;
@@ -67,4 +67,9 @@ export const Button = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   font-size: 18px;
   color: #fff;
+`;
+
+export const Header = styled.Text`
+  background-color: #162c46;
+  padding: 80px;
 `;

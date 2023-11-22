@@ -5,19 +5,19 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: #FFF;
+  background-color: blue;
 `;
 
 export const BackgroundImage = styled(ImageBackground)`
   flex: 0.4;
   z-index: 2;
   height: 300px;
-  background-color: #FFF;
+  background-color: #fff;
 `;
 
 export const BackgroundText = styled(Text)`
   font-size: 36px;
-  color: #FFF;
+  color: #000;
   padding-top: 20%;
   padding-left: 10%;
   text-transform: capitalize;
@@ -30,7 +30,7 @@ export const ScrollViewContent = styled(ScrollView)`
 `;
 
 export const Card = styled.View`
-  background-color: #FFF;
+  background-color: #000;
   margin-top: 10%;
   margin-bottom: 12px;
   padding-bottom: 10%;
@@ -103,8 +103,6 @@ export const StyledTextImage = styled.Text`
   padding: 24px;
   border-radius: 4px;
 `;
-
-
 
 export const Button = styled.TouchableOpacity`
   width: 90%;

@@ -15,12 +15,10 @@ import {
   ScrollViewContent,
   ContainerButton,
 } from "./styles";
-import { CustomHeader } from "../../components/Header";
 import { CustomSubmitButton } from "../../components/Button";
 import { CustomInput } from "../../components/InputForm";
 import { DatePicker } from "../../components/DatePicker";
-import { CategoryPicker } from "../../components/CategoryPicker";
-import { bool } from "yup";
+import { StatusPicker } from "../../components/StatusPicker";
 
 export default function CreateTask() {
   const navigation = useNavigation();
@@ -35,7 +33,7 @@ export default function CreateTask() {
     defaultValues: {
       name: "",
       deadline: new Date(),
-      finished: false,
+      finished: "",
     },
     resolver: yupResolver(createTaskSchema),
   });
@@ -62,7 +60,7 @@ export default function CreateTask() {
       reset({
         name: "",
         deadline: new Date(),
-        finished: false,
+        finished: "",
       });
       navigation.navigate("ListTasks");
     } catch (error) {
@@ -72,13 +70,12 @@ export default function CreateTask() {
 
   return (
     <Container>
-      <CustomHeader title="Cadastrar nova tarefa" />
       <ScrollViewContent>
         <FormArea>
           <CustomInput
             name="name"
-            label="NOME"
-            placeholder="DIGITE O NOME"
+            label="Nome"
+            placeholder="Digite o nome"
             control={control}
             error={errors.name}
           />
@@ -88,7 +85,7 @@ export default function CreateTask() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
-                  <Label>DATA DE EXPIRAÇÃO</Label>
+                  <Label>Deadline</Label>
                   <DatePicker
                     control={control}
                     value={value}
@@ -107,17 +104,16 @@ export default function CreateTask() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
-                  <Label>STATUS</Label>
-                  <CategoryPicker
+                  <Label>Status</Label>
+                  <StatusPicker
                     control={control}
                     value={value}
                     onChange={onChange}
                     errors={errors}
-                    keyboardType={bool}
                   />
                 </>
               )}
-              name="finished"
+              name="status"
             />
           </InputContainer>
 

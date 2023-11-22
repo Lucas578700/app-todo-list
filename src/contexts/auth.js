@@ -33,13 +33,13 @@ function AuthProvider({ children }) {
   }, [])
 
   
-     async function signIn(email, password){
+  async function signIn(email, password){
     await signInWithEmailAndPassword(auth, email, password)
     .then( (value) => {
       setUser(value.user);
       AsyncStorage.setItem('@user', JSON.stringify(value.user));
     })
-    .catch( (error) => {        
+    .catch((error) => {
         Alert.alert('E-mail ou senha incorretos!');
         setLoadingAuth(false);
         return;

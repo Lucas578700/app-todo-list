@@ -2,8 +2,6 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Task from '../pages/Task';
-import CreateTask from '../pages/CreateTask';
-
 
 const AuthStack = createNativeStackNavigator();
 
@@ -17,18 +15,7 @@ function AuthRoutes() {
                     headerShown: false,
                 }}
             />
-
-        <AuthStack.Screen
-                name="CreateTask"
-                component={CreateTask}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            
         </AuthStack.Navigator>
-
-                
     )
 }
 

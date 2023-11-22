@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Image, RefreshControl } from "react-native";
-import {
-  useRoute,
-  useNavigation,
-  useIsFocused,
-} from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { format } from "date-fns";
 import { ref, onValue } from "firebase/database";
 import { db } from "../../services/firebaseConnection";
 import {
@@ -56,6 +49,8 @@ export default function CardComponent({ data }) {
         <StyledTextDescription>{data.name}</StyledTextDescription>
         <Label>Status</Label>
         <StyledTextData>{data.status}</StyledTextData>
+        <Label>Deadline</Label>
+        <StyledTextData>{data.deadline}</StyledTextData>
       </Card>
 
       <Button onPress={openConfirmationModal}>

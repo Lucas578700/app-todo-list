@@ -44,7 +44,7 @@ export const SubmitButton = styled.TouchableOpacity`
   width: 90%;
   height: 45px;
   border-radius: 8px;
-  background-color: #68B2F8;
+  background-color: #162c46;
   margin-top: 10px;
   align-items: center;
   justify-content: center;

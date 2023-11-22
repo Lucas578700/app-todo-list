@@ -30,7 +30,7 @@ export const ScrollViewContent = styled(ScrollView)`
 `;
 
 export const Card = styled.View`
-  background-color: #FFF;
+  background-color: #000;
   margin-top: 10%;
   margin-bottom: 12px;
   padding-bottom: 10%;
@@ -103,8 +103,6 @@ export const StyledTextImage = styled.Text`
   padding: 24px;
   border-radius: 4px;
 `;
-
-
 
 export const Button = styled.TouchableOpacity`
   width: 90%;
