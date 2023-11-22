@@ -5,7 +5,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: blue;
+  background-color: #fff;
 `;
 
 export const BackgroundImage = styled(ImageBackground)`
@@ -16,10 +16,10 @@ export const BackgroundImage = styled(ImageBackground)`
 `;
 
 export const BackgroundText = styled(Text)`
-  font-size: 36px;
+  font-size: 25px;
   color: #000;
-  padding-top: 20%;
-  padding-left: 10%;
+  padding-top: 10%;
+  padding-left: 20%;
   text-transform: capitalize;
 `;
 
@@ -117,6 +117,7 @@ export const ButtonText = styled.Text`
   color: #fff;
   text-align: center;
   font-size: 18px;
+  text-transform: capitalize;
 `;
 
 export const ModalContainer = styled.Modal``;

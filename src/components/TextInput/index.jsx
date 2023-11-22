@@ -1,7 +1,7 @@
 import React from "react";
 import { Error, Input, InputContainer, Label } from './styles';
 
-const TextInputField = ({ label, name, value, onChange, placeholder, error, keyboardType, secureTextEntry }) => {
+export const TextInputField = ({ label, name, value, onChange, placeholder, error, keyboardType, secureTextEntry }) => {
   return (
     <InputContainer>
       <Input
@@ -16,4 +16,3 @@ const TextInputField = ({ label, name, value, onChange, placeholder, error, keyb
   );
 };
 
-export default TextInputField;

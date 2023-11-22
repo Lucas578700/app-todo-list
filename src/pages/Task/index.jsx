@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Image,
-  RefreshControl,
   FlatList,
 } from "react-native";
 import {
@@ -84,6 +82,7 @@ function Task() {
           <BackgroundText>Criar nova conta</BackgroundText>
         </Button>
       <Container>
+        
         {tasks && (
           <FlatList
             data={tasks}

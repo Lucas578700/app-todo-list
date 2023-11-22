@@ -1,83 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Image, RefreshControl } from "react-native";
-import { ref, onValue } from "firebase/database";
-import { db } from "../../services/firebaseConnection";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { ref, remove } from 'firebase/database';
 import {
-    Card,
-    Label,
-    StyledTextDescription,
-    StyledTextData,
-    Button,
-    ButtonText,
-    ModalBackground,
-    ModalButton,
-    ModalButtonContainer,
-    ModalButtonText,
-    ModalContainer,
-    ModalContent,
-    ModalText,
-  } from "./styles";
+  Container,
+  SubContainer,
+  TextDescription,
+} from "./styles";
+import { db } from "../../services/firebaseConnection";
+import { CustomSubmitButton } from "../../components/Button";
 
-export default function CardComponent({ data }) {
-  const [isConfirmationModalVisible, setConfirmationModalVisible] =
-    useState(false);
+export default function Task({ data }) {
+  const navigation = useNavigation();
+  const taskKey = data.id;
 
-  const openConfirmationModal = () => {
-    setConfirmationModalVisible(true);
-  };
-
-  const closeConfirmationModal = () => {
-    setConfirmationModalVisible(false);
-  };
-
-  async function deleteTasks(id) {
-    const taskRef = ref(db, `/tasks/${id}`); // Substitua 'seu_nodo' pelo caminho correto
-    remove(taskRef)
+  const onSubmitDelete = async () => {
+    const taskRef = ref(db, `/tasks/${taskKey}`);
+    await remove(taskRef)
       .then(() => {
-        Alert.alert("Tarefa deletada com sucesso!");
+        Alert.alert(`Task removida com sucesso.`);
+        navigation.navigate("Task");
       })
       .catch((error) => {
-        Alert.alert(`Erro ao remover o usuário: ${error}`);
+        Alert.alert("Erro ao deletar: ", error);
       });
-  }
+  };
 
+  const onSubmitEdit = async (data) => {
+    navigation.navigate("EditTask", {task: data});
+  };
 
   return (
-    <>
-      <Card>
-        <Label>Nome</Label>
-        <StyledTextDescription>{data.name}</StyledTextDescription>
-        <Label>Status</Label>
-        <StyledTextData>{data.status}</StyledTextData>
-        <Label>Deadline</Label>
-        <StyledTextData>{data.deadline}</StyledTextData>
-      </Card>
+    <Container>
+      <SubContainer>
+        <TextDescription>Nome</TextDescription>
+        <TextDescription>{data.name}</TextDescription>
+      </SubContainer>
+      <SubContainer>
+        <TextDescription>Prazo</TextDescription>
+        <TextDescription>{data.deadline}</TextDescription>
+      </SubContainer>
 
-      <Button onPress={openConfirmationModal}>
-        <ButtonText>Excluir</ButtonText>
-      </Button>
+      <SubContainer>
+        <TextDescription>Status</TextDescription>
+        <TextDescription>{data.status}</TextDescription>
+      </SubContainer>
 
-      <ModalContainer
-        visible={isConfirmationModalVisible}
-        transparent={true}
-        animationType="slide"
-      >
-        <ModalBackground>
-          <ModalContent>
-            <ModalText>
-              Tem certeza de que deseja excluir este tarefa?
-            </ModalText>
-            <ModalButtonContainer>
-              <ModalButton onPress={() => deleteTasks(data.id)}>
-                <ModalButtonText>Confirmar</ModalButtonText>
-              </ModalButton>
-              <ModalButton onPress={closeConfirmationModal}>
-                <ModalButtonText>Cancelar</ModalButtonText>
-              </ModalButton>
-            </ModalButtonContainer>
-          </ModalContent>
-        </ModalBackground>
-      </ModalContainer>
-    </>
+      <SubContainer>
+        <CustomSubmitButton
+          activeOpacity={0.8}
+          onPress={() => onSubmitEdit(data)}
+          text="Editar"
+        />
+
+        <CustomSubmitButton
+          activeOpacity={0.8}
+          onPress={() => onSubmitDelete()}
+          text="Excluir"
+        />
+      </SubContainer>
+    </Container>
   );
 }

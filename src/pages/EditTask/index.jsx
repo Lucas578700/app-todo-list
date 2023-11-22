@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import { Keyboard, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ref, push } from "firebase/database";
+import { ref, update } from "firebase/database";
 import { db } from "../../services/firebaseConnection";
 import { createTaskSchema } from "../../utils/createTaskValidation";
 import {
@@ -16,13 +16,19 @@ import {
   ContainerButton,
 } from "./styles";
 import { CustomSubmitButton } from "../../components/Button";
+import { CustomInput } from "../../components/InputForm";
 import { DatePicker } from "../../components/DatePicker";
 import { StatusPicker } from "../../components/StatusPicker";
-import { CustomInput } from "../../components/InputForm";
 
-export default function CreateTask() {
+export default function EditTask() {
   const navigation = useNavigation();
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const route = useRoute();
+  const task = route.params.task;
+
+  const dateParts = task.deadline.split("/");
+  const customFormatObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
   const {
     control,
@@ -31,18 +37,18 @@ export default function CreateTask() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      deadline: new Date(),
-      status: "",
+      name: task.name,
+      deadline: customFormatObject,
+      status: task.status,
     },
     resolver: yupResolver(createTaskSchema),
   });
 
-  const onTask = async () => {
-    navigation.navigate("Task");
+  const onListTasks = async () => {
+    navigation.navigate("ListTasks");
   };
 
-  const onSubmitCreate = async (data) => {
+  const onSubmitEdit = async (data) => {
     Keyboard.dismiss();
 
     const options = {
@@ -58,14 +64,11 @@ export default function CreateTask() {
     const newData = { ...data, deadline: formattedDate };
 
     try {
-      await push(ref(db, "/tasks"), newData);
+      const userRef = ref(db, `/tasks/${task.id}`);
+      await update(userRef, newData);
 
-      reset({
-        name: "",
-        deadline: new Date(),
-        status: "",
-      });
-      navigation.navigate("Task");
+      reset(data);
+      navigation.navigate("ListTasks");
     } catch (error) {
       Alert.alert("Erro ao criar: ", error.message);
     }
@@ -73,15 +76,16 @@ export default function CreateTask() {
 
   return (
     <Container>
+      <CustomHeader title={`Editar tarefa ${task.name}`} />
       <ScrollViewContent>
         <FormArea>
-          {/* <CustomInput
+          <CustomInput
             name="name"
             label="NOME"
             placeholder="DIGITE O NOME"
             control={control}
             error={errors.name}
-          /> */}
+          />
 
           <InputContainer>
             <Controller
@@ -112,6 +116,7 @@ export default function CreateTask() {
                     control={control}
                     value={value}
                     onChange={onChange}
+                    showPicker={task.status}
                     errors={errors}
                   />
                 </>
@@ -123,12 +128,12 @@ export default function CreateTask() {
           <ContainerButton>
             <CustomSubmitButton
               activeOpacity={0.8}
-              onPress={handleSubmit(onSubmitCreate)}
-              text="Cadastrar"
+              onPress={handleSubmit(onSubmitEdit)}
+              text="Editar"
             />
             <CustomSubmitButton
               activeOpacity={0.8}
-              onPress={() => onTask()}
+              onPress={() => onListTasks()}
               text="Lista de Tarefas"
             />
           </ContainerButton>

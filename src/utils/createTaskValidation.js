@@ -8,6 +8,6 @@ export const createTaskSchema = yup.object().shape({
     deadline: yup
         .date()
         .required("O prazo é obrigatório"),
-    finished: yup.bool()
+    status: yup.string()
         .required('O status é obrigatorio')
 });

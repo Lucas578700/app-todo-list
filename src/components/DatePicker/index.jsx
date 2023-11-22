@@ -1,33 +1,52 @@
-import React from 'react';
-import { View } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
-import { StyledTouchableOpacity, StyledTouchableOpacityText } from './styles';
+import React from "react";
+import { Controller } from "react-hook-form";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { StyledTouchableOpacity, StyledTouchableOpacityText } from "./styles";
 
-const DatePicker = ({ value, onChange, showPicker, setShowPicker }) => {
-
-  const formattedDate = value instanceof Date
-    ? format(value, 'dd/MM/yyyy', { locale: ptBR })
-    : '';
+export const DatePicker = ({
+  control,
+  value,
+  onChange,
+  showPicker,
+  setShowPicker,
+}) => {
+  const formattedDate =
+    value instanceof Date
+      ? format(value, "dd/MM/yyyy", { locale: ptBR })
+      : value
+      ? value
+      : "";
 
   return (
-    <View>
-      <StyledTouchableOpacity onPress={() => setShowPicker(true)}>
-        <StyledTouchableOpacityText>Data Selecionada: {formattedDate}</StyledTouchableOpacityText>
-      </StyledTouchableOpacity>
-      <DateTimePickerModal
-        isVisible={showPicker}
-        mode="date"
-        onConfirm={(data) => {
-          setShowPicker(false);
-          onChange(data);
-        }}
-        onCancel={() => setShowPicker(false)}
-        locale={ptBR}
-      />
-    </View>
+    <Controller
+      control={control}
+      defaultValue={formattedDate}
+      render={({ field: { onChange, value } }) => (
+        <>
+          <StyledTouchableOpacity onPress={() => setShowPicker(true)}>
+            <StyledTouchableOpacityText>
+              <Icon name="calendar" size={20} color="#fff" /> Datas Selecionada:{" "}
+              {formattedDate}
+            </StyledTouchableOpacityText>
+          </StyledTouchableOpacity>
+
+          <DateTimePickerModal
+            isVisible={showPicker}
+            mode="date"
+            date={new Date()}
+            onConfirm={(data) => {
+              setShowPicker(false);
+              onChange(data);
+            }}
+            onCancel={() => setShowPicker(false)}
+            locale={ptBR}
+          />
+        </>
+      )}
+      name="deadline"
+    />
   );
 };
-
-export default DatePicker;
