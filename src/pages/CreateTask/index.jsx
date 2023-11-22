@@ -77,8 +77,8 @@ export default function CreateTask() {
         <FormArea>
           {/* <CustomInput
             name="name"
-            label="NOME"
-            placeholder="DIGITE O NOME"
+            label="Nome"
+            placeholder="Digite o nome da Tarefa"
             control={control}
             error={errors.name}
           /> */}
@@ -88,7 +88,7 @@ export default function CreateTask() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
-                  <Label>DATA DE EXPIRAÇÃO</Label>
+                  <Label>Data Final</Label>
                   <DatePicker
                     control={control}
                     value={value}
@@ -107,7 +107,7 @@ export default function CreateTask() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <>
-                  <Label>STATUS</Label>
+                  <Label>Status</Label>
                   <StatusPicker
                     control={control}
                     value={value}
